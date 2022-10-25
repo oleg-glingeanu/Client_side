@@ -37,10 +37,14 @@ function App() {
     <>
     <Router>
       <ApolloProvider client={client}>
+      <a href={`/home`}>
         <Header/>
+        </a>
         <div className='container'>
           <Routes>
+            <Route path='/home' element={<Home/>}></Route>
             <Route path='/' element={<Home/>}></Route>
+            <Route path='/Client_side' element={<Home/>}></Route>
             <Route path='/project/:id' element={<Project/>}></Route>
             <Route path='*' element={<NotFound/>}></Route>
           </Routes>
