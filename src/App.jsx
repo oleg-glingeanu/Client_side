@@ -1,26 +1,33 @@
-import ResponsiveAppBar from './Components/Appbar/Appbar'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from './Pages/Home'
-import NotFound from './Pages/NotFound'
-import CreatePostForm from './Pages/CreatePostForm'
-import { Provider } from 'react-redux'
-import store from './Redux/store'
-import Post from './Pages/Post'
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom"
+import Home from "Pages/HomePage"
+import LoginPage from "Pages/LoginPage"
+import ProfilePage from "Pages/ProfilePage"
+import RegisterPage from "Pages/RegisterPage"
+import { useMemo } from "react"
+import { useSelector } from "react-redux"
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material"
+import { themeSettings } from "Styles/Theme"
+
+
 
 export default function App() {
+  const mode = useSelector((state) => state.mode);
+  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode])
+
   return (
-    <>
-      <Provider store={store}>
-        <Router basename="/">
-        <ResponsiveAppBar />
+    <div className="app">
+      <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <CssBaseline>
           <Routes>
-            <Route exact path='/' element={<Home />} />
-            <Route path='/create-form' element={<CreatePostForm />} />
-            <Route path='/post/:id' element={<Post />} />
-            <Route path='*' element={<NotFound />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Routes>
-        </Router>
-      </Provider>
-    </>
+        </CssBaseline>
+      </ThemeProvider>
+      </BrowserRouter>
+    </div>
   )
 }

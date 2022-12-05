@@ -1,17 +1,45 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { postsReducer } from './Reducers/postsReducer';
+import { createSlice } from "@reduxjs/toolkit";
 
-const reducer = combineReducers({
-    posts: postsReducer
+const initialState = {
+    mode: "light",
+    user: null,
+    token: null,
+    posts: []
+};
+
+export const authSlice = createSlice({
+    name: "auth",
+    initialState,
+    reducers: {
+        setMode: (state) => {
+            state.mode = state.mode == "light" ? "dark" : "light";
+        },
+        setLogin: (state, action) => {
+            state.user = action.payload.user;
+            state.token = action.payload.token;
+        },
+        setLogout: (state) => {
+            state.user = null
+            state.token = null
+        },
+        setFollowing: (state, action) => {
+            if(state.user){
+                state.user.following = action.payload.friends
+            }else{
+                console.error("user does not follow anyone")
+            }
+        },
+        setPosts: (state, action) => {
+            state.posts = action.payload.posts
+        },
+        setPost: (state, action) => {
+            const updatedPosts = state.posts.map((post) =>{
+                if(post.id === action.payload.post_id) return action.payload.post;
+            });
+            state.posts = updatedPosts
+        }
+    }
 })
 
-const middleware = [thunk];
-
-const store = createStore(
-    reducer,
-    composeWithDevTools(applyMiddleware(...middleware))
-)
-
-export default store;
+export const {setMode, setLogin, setLogout, setFollowing, setPosts, setPost } = authSlice.actions
+export default authSlice.reducer

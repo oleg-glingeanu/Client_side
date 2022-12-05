@@ -18,6 +18,7 @@ export default function Post({post}) {
                 <CardActions>
                 <Button size='small'><Link href={`/post/${post._id}`}>Open Post</Link></Button>
                     <Button size='small'>Share</Button>
+                    <Button size='small'>Likes:</Button>
                 </CardActions>
             </CardContent>
         </Card>
