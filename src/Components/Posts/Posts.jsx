@@ -12,7 +12,7 @@ export default function Posts() {
   const dispatch = useDispatch();
 
   const getPosts = async () => {
-    const response = await fetch("http://localhost:3001/posts", {
+    const response = await fetch("https://4thyearproject-production.up.railway.app/posts", {
       method: "GET",
     });
     const data = await response.json();
