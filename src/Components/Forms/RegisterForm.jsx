@@ -60,7 +60,7 @@ export default function RegisterForm() {
     formData.append('picturePath', values.picture.name)
 
     const savedUserResponse = await fetch(
-        "https://4thyearproject-production.up.railway.app/register",{
+        "https://4thyearproject-production.up.railway.app/auth/register",{
             method: "POST",
             body: formData,
         }
@@ -73,26 +73,24 @@ export default function RegisterForm() {
     }
   }
 
-  const login = async ( values, onSubmitProps) => {
-    const loggedInResponse = await fetch(
-        "https://4thyearproject-production.up.railway.app/login",{
-            method: "POST",
-            headers: {"Content-Type" : "application/json"},
-            body: JSON.stringify(values)
-        }
-    )
-    const loggedIn = await loggedInResponse.json()
+  const login = async (values, onSubmitProps) => {
+    const loggedInResponse = await fetch("https://4thyearproject-production.up.railway.app/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+    const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
-    if(loggedIn){
-        dispatch(
-            setLogin({
-                user: loggedIn.user,
-                token: loggedIn.token,
-            })
-        );
-        navigate("/")
+    if (loggedIn) {
+      dispatch(
+        setLogin({
+          user: loggedIn.user,
+          token: loggedIn.token,
+        })
+      );
+      navigate("/home");
     }
-  }
+  };
 
   const handleFormSubmit = async(values, onSubmitProps) =>{
     if(isLogin)await login(values, onSubmitProps);
@@ -231,7 +229,6 @@ export default function RegisterForm() {
             <Box
             display="grid"
             gap="30px"
-            margin="5rem"
             gridTemplateColumns="repeat(4, minmax(1, 1fr))"
             sx={{
                 "& > div" : {gridColumn: isNonMobile? undefined : "span 4"}
