@@ -60,7 +60,7 @@ export default function RegisterForm() {
     formData.append('picturePath', values.picture.name)
 
     const savedUserResponse = await fetch(
-        "https://4thyearproject-production.up.railway.app/register",{
+        "https://4thyearproject-production.up.railway.app/auth/register",{
             method: "POST",
             body: formData,
         }
