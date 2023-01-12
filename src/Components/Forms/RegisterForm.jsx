@@ -60,7 +60,7 @@ export default function RegisterForm() {
     formData.append('picturePath', values.picture.name)
 
     const savedUserResponse = await fetch(
-        "http://192.168.0.160:3001/auth/register",{
+        "https://4thyearproject-production.up.railway.app/register",{
             method: "POST",
             body: formData,
         }
@@ -74,7 +74,7 @@ export default function RegisterForm() {
   }
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://192.168.0.160:3001/auth/login", {
+    const loggedInResponse = await fetch("https://4thyearproject-production.up.railway.app/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),

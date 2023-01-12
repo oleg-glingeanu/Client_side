@@ -46,7 +46,7 @@ function NewPostForm() {
     formData.append('picturePath', values.picture.name)
     formData.append("userId", _id);
     const savedPostResponse = await fetch(
-        "http://localhost:3001/posts/",{
+        "https://4thyearproject-production.up.railway.app/posts/",{
             method: "POST",
             headers: { Authorization: `Bearer ${token}` },
             body: formData,

@@ -15,7 +15,7 @@ export default function PostPage() {
     const [post, setPost] = useState(null)
 
     const getPost = async() => {
-      const response = await fetch(`http://localhost:3001/posts/${_id}`,
+      const response = await fetch(`https://4thyearproject-production.up.railway.app/posts/${_id}`,
       {
           method: "GET",
       })
