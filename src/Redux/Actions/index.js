@@ -2,7 +2,7 @@ import axios  from 'axios';
 import { ADDNEW_POST, GETALL_POSTS, GET_POST, DELETE_POST } from './type';
 
 
-const API_URL = 'https://4thyearproject-production.up.railway.app/';
+const API_URL = 'http://localhost:3001';
 
 
 export const addNewPost = (data) => async(dispatch) => {
@@ -21,7 +21,7 @@ export const getAllPosts = () => async(dispatch) => {
         const res = await axios.get(`${API_URL}/posts`);
         dispatch( { type: GETALL_POSTS, payload: res.data })
     } catch (error) {
-        console.log(error.message)
+        console.log("Hello", error.message)
     }
 }
 
