@@ -120,7 +120,7 @@ function ProfileWidget({ userId, picturePath }) {
 
         <FlexBetween gap="1rem" mb="0.5rem">
           <FlexBetween gap="1rem">
-            <img src="https://4thyearproject-production.up.railway.app/twitter.png" alt="twitter" />
+            <img src="https://4thyearproject-production.up.railway.app/assets/twitter.png" alt="twitter" />
             <Box>
               <Typography color={main} fontWeight="500">
                 Twitter
@@ -133,7 +133,7 @@ function ProfileWidget({ userId, picturePath }) {
 
         <FlexBetween gap="1rem">
           <FlexBetween gap="1rem">
-            <img src="https://4thyearproject-production.up.railway.app/linkedin.png" alt="linkedin" />
+            <img src="https://4thyearproject-production.up.railway.app/assets/linkedin.png" alt="linkedin" />
             <Box>
               <Typography color={main} fontWeight="500">
                 Linkedin
