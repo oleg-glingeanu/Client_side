@@ -22,7 +22,7 @@ function ProfileWidget({ userId, picturePath }) {
     const main = palette.neutral.main;
 
     const getUser = async() => {
-        const response = await fetch(`http://localhost:3001/users/${userId}`,
+        const response = await fetch(`https://4thyearproject-production.up.railway.app/${userId}`,
         {
             method: "GET",
         })

@@ -46,7 +46,7 @@ export default function PostPage() {
               alt={post?.title}
               width="100%"
               height="100%"
-              src={`http://localhost:3001/assets/${picturePath}`}
+              src={`https://4thyearproject-production.up.railway.app/assets/${picturePath}`}
               style={{ objectFit: "contain", borderRadius: "2rem"}}
             />
           </Box>
