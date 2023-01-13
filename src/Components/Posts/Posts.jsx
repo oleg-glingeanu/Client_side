@@ -11,7 +11,7 @@ export default function Posts() {
   const dispatch = useDispatch();
 
   const getPosts = async () => {
-    const response = await fetch("https://4thyearproject-production.up.railway.app/posts", {
+    const response = await fetch("http://localhost:3001/posts", {
       method: "GET",
     });
     const data = await response.json();
@@ -29,7 +29,7 @@ export default function Posts() {
             spacing={{ xs: 1, md: 1 }}
             justifyContent="center"
             sx={{ margin: `20px 4px 10px 4px` }}
-            columns={{ xs: 4, sm: 4, md: 18 }} 
+            columns={{ xs: 2, sm: 2, md: 12 }} 
             display={isNonMobileScreens? "flex" : "block"}
             > 
         {posts.map(post=>(

@@ -54,13 +54,14 @@ export default function RegisterForm() {
 
   const register = async ( values, onSubmitProps) =>{
     const formData = new FormData();
+    const randomString = Math.random().toString(36).slice(-5);
+    const fileName = `${values.picture.name.split(".")[0]}${randomString}.${values.picture.name.split(".")[1]}`;
+    formData.append('picturePath', fileName)
     for (let value in values){
         formData.append(value, values[value])
     }
-    formData.append('picturePath', values.picture.name)
-
     const savedUserResponse = await fetch(
-        "https://4thyearproject-production.up.railway.app/auth/register",{
+        "http://localhost:3001/auth/register",{
             method: "POST",
             body: formData,
         }
@@ -74,7 +75,7 @@ export default function RegisterForm() {
   }
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("https://4thyearproject-production.up.railway.app/auth/login", {
+    const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
