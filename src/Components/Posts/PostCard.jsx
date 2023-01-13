@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import FlexBetween from 'Components/FlexBetween/FlexBetween';
 
 export default function PostCard({post}) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  
   return (
     <FlexBetween >
         <Box width='300px' sx={{ margin: `20px 4px 10px 4px` }}>

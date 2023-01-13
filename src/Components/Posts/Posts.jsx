@@ -29,7 +29,7 @@ export default function Posts() {
             spacing={{ xs: 1, md: 1 }}
             justifyContent="center"
             sx={{ margin: `20px 4px 10px 4px` }}
-            columns={{ xs: 1, sm: 2, md: 8 }} 
+            columns={{ xs: 4, sm: 4, md: 18 }} 
             display={isNonMobileScreens? "flex" : "block"}
             > 
         {posts.map(post=>(

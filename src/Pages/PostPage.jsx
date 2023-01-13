@@ -6,10 +6,11 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { useState, useEffect } from 'react';
 import Navbar from "Components/NavBar/NavBar"
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function PostPage() {
     const {_id} = useParams();
+    const navigate = useNavigate();
     const [count, setCount] = useState(1);
     const [value, setValue] = useState("description");
     const [post, setPost] = useState(null)
@@ -23,18 +24,36 @@ export default function PostPage() {
       setPost(data);
     }
 
+    const delPost = async() => {
+      const response = await fetch(`https://4thyearproject-production.up.railway.app/posts/${_id}`,
+      {
+          method: "DELETE",
+      })
+      const data = await response.json();
+      setPost(data);
+    }
+
     useEffect(() =>{
-      if(_id)
       getPost();
     }, [])
 
     if(!post){
       return null;
-  }
+    }
     const {title,
     description,
     price,
     picturePath} = post
+    
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
+
+    const handleDelete = () => {
+      delPost();
+      navigate("/home");
+    }
+    
     return (
       <>
       <Navbar />
@@ -90,8 +109,9 @@ export default function PostPage() {
                   minWidth: "150px",
                   padding: "10px 40px",
                 }}
+                onClick={handleDelete}
               >
-                ADD TO CART
+                Delete
               </Button>
             </Box>
             <Box>
@@ -111,7 +131,7 @@ export default function PostPage() {
             <Tab label="REVIEWS" value="reviews" />
           </Tabs>
         </Box>
-        <Box display="flex" flexWrap="wrap" gap="15px">
+        <Box display="flex" flexWrap="wrap" gap="15px" onClick={handleChange}>
           {value === "description" && (
             <div>{description}</div>
           )}

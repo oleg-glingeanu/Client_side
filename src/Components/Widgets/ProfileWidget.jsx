@@ -8,7 +8,6 @@ import { Box, Typography, Divider, useTheme } from "@mui/material";
 import UserImage from "./UserImage";
 import FlexBetween from "../FlexBetween/FlexBetween";
 import WidgetWrapper from "../FlexBetween/WidgetWrapper";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -54,7 +53,7 @@ function ProfileWidget({ userId, picturePath }) {
         <FlexBetween
         gap="0.5rem"
         pb="1.1rem"
-        onClick={navigate(`/profile/${userId}`)}
+        onClick={() => navigate(`/profile/${userId}`)}
       >
         <FlexBetween gap="1rem">
           <UserImage image={picturePath} />

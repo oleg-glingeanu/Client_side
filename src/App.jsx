@@ -9,7 +9,7 @@ import { useMemo } from "react"
 import { useSelector } from "react-redux"
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material"
 import { themeSettings } from "Styles/Theme"
-
+import 'ScrollBar.css'
 export default function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode])

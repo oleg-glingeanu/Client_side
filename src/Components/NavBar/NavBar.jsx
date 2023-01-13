@@ -27,6 +27,7 @@ import { useNavigate } from "react-router-dom";
 import FlexBetween from "../FlexBetween/FlexBetween";
 import logo from '../../Assets/Logo.png'
 const Navbar = () => {
+  
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,7 +38,6 @@ const Navbar = () => {
   const neutralLight = theme.palette.neutral.light;
   const dark = theme.palette.neutral.dark;
   const background = theme.palette.background.default;
-  const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
 
   const fullName = `${user.firstName}`;
@@ -52,7 +52,7 @@ const Navbar = () => {
           fontWeight="bold"
           fontSize="clamp(1rem, 2rem, 2.25rem)"
           color="secondary"
-          onClick={navigate("/home")}
+          onClick={() => navigate("/home")}
           sx={{
             "&:hover": {
               color: dark,

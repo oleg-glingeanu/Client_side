@@ -8,16 +8,14 @@ import {
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setLogin } from '../../Redux/store';
+import { useSelector } from 'react-redux';
 import Dropzone from 'react-dropzone'; 
 import FlexBetween from 'Components/FlexBetween/FlexBetween';
-import { useState } from 'react';
 
 const postSchema = yup.object().shape({
   title: yup.string().required("Required"),
   description: yup.string().required("Required"),
-  picture: yup.string().required("Required"),
+  picture: yup.string(),
   price:yup.number().required("Required"),
 });
 
@@ -30,7 +28,6 @@ const initialValuesPost = {
 
 function NewPostForm() {
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)")
   const { _id } = useSelector((state) => state.user);
@@ -39,12 +36,13 @@ function NewPostForm() {
 
   const createPost = async ( values, onSubmitProps) =>{
     const formData = new FormData();
-    
+    const randomString = Math.random().toString(36).slice(-5);
+    const fileName = `${values.picture.name.split(".")[0]}${randomString}.${values.picture.name.split(".")[1]}`;
+    formData.append('picturePath', fileName)
+    formData.append("userId", _id);
     for (let value in values){
         formData.append(value, values[value])
     }
-    formData.append('picturePath', values.picture.name)
-    formData.append("userId", _id);
     const savedPostResponse = await fetch(
         "https://4thyearproject-production.up.railway.app/posts/",{
             method: "POST",

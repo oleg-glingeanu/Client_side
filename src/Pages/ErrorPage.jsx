@@ -26,7 +26,7 @@ function ErrorPage() {
             <ErrorIcon/>
             </Typography>
             <Button
-                onClick={navigate(
+                onClick={() => navigate(
                     isAuth ? "/home" : "/"
                 )}
                 fullWidth
