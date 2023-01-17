@@ -1,6 +1,7 @@
 import NewPostForm from "Components/Forms/NewPostForm"
 import Navbar from "Components/NavBar/NavBar"
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
+import Footer from "Components/Footer/Footer";
 
 function AddNewPost() {
     const theme = useTheme();
@@ -17,12 +18,19 @@ function AddNewPost() {
             borderRadius="1.5rem"
             backgroundColor={theme.palette.background.alt}
         >
-            <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem", textAlign: "center" }}>
-            Create a new post
+            <Typography 
+              fontWeight="500" 
+              variant="h5"
+              textAlign="center"
+              sx={{ mb: "1.5rem"}} 
+              fontSize="clamp(1rem, 1.75rem, 2.25rem)"
+              color="secondary">
+              Create a new post
             </Typography>
             <NewPostForm/>
             </Box>
     </Box>
+    <Footer />
     </>
   )
 }

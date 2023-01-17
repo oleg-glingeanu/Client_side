@@ -4,13 +4,17 @@ import {
   TextField,
   useMediaQuery,
   Typography,
+
 } from '@mui/material'
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Dropzone from 'react-dropzone'; 
 import FlexBetween from 'Components/FlexBetween/FlexBetween';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 
 const postSchema = yup.object().shape({
   title: yup.string().required("Required"),
@@ -44,7 +48,7 @@ function NewPostForm() {
         formData.append(value, values[value])
     }
     const savedPostResponse = await fetch(
-        "https://4thyearproject-production.up.railway.app/posts/",{
+        "http://localhost:3001/posts/",{
             method: "POST",
             headers: { Authorization: `Bearer ${token}` },
             body: formData,
@@ -146,6 +150,17 @@ function NewPostForm() {
                         helperText={touched.price && errors.price}
                         sx={{gridColumn: "span 4"}}
                         />
+                {/* <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DesktopDatePicker
+                    label="End Time"
+                    onChange={date => setFieldValue("endTime", date)}
+                    value={values.endTime}
+                    name="endTime"
+                    error={Boolean(touched.endTime) && Boolean(errors.endTime)}
+                    helperText={touched.endTime && errors.endTime}
+                    sx={{gridColumn: "span 4"}}
+                    />
+                </LocalizationProvider> */}
             </Box>
             {/* BUTTONS SECTION */}
             <Box

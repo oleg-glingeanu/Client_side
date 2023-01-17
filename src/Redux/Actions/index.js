@@ -2,7 +2,7 @@ import axios  from 'axios';
 import { ADDNEW_POST, GETALL_POSTS, GET_POST, DELETE_POST } from './type';
 
 
-const API_URL = 'https://4thyearproject-production.up.railway.app/'
+const API_URL = 'http://localhost:3001';
 
 
 export const addNewPost = (data) => async(dispatch) => {

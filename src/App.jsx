@@ -4,6 +4,7 @@ import LoginPage from "Pages/LoginPage"
 import AddNewPost from "Pages/AddNewPost"
 import ErrorPage from "Pages/ErrorPage"
 import ProfilePage from "Pages/ProfilePage"
+import NotificationsPage from "Pages/NotificationsPage"
 import PostPage from "Pages/PostPage"
 import { useMemo } from "react"
 import { useSelector } from "react-redux"
@@ -14,9 +15,6 @@ export default function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode])
   const isAuth = Boolean(useSelector((state) => state.token));
-  console.log(isAuth)
-  console.log(theme)
-  console.log(mode)
   return (
     <div className="app">
       <BrowserRouter>
@@ -39,6 +37,10 @@ export default function App() {
             <Route
               path="/post/:_id"
               element={isAuth ? <PostPage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/notifications"
+              element={isAuth ? <NotificationsPage /> : <Navigate to="/" />}
             />
             <Route
               path="*"
