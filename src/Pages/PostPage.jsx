@@ -17,7 +17,7 @@ export default function PostPage() {
     const [post, setPost] = useState(null)
 
     const getPost = async() => {
-      const response = await fetch(`http://localhost:3001/posts/${_id}`,
+      const response = await fetch(`https://4thyearproject-production.up.railway.app/posts/${_id}`,
       {
           method: "GET",
       })
@@ -26,7 +26,7 @@ export default function PostPage() {
     }
     console.log(_id)
     const delPost = async() => {
-      const response = await fetch(`http://localhost:3001/posts/${_id}`,
+      const response = await fetch(`https://4thyearproject-production.up.railway.app/posts/${_id}`,
       {
           method: "DELETE",
       })
@@ -66,7 +66,7 @@ export default function PostPage() {
               alt={post?.title}
               width="100%"
               height="100%"
-              src={`http://localhost:3001/assets/${picturePath}`}
+              src={`https://4thyearproject-production.up.railway.app/assets/${picturePath}`}
               style={{ objectFit: "contain", borderRadius: "2rem"}}
             />
           </Box>

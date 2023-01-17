@@ -48,7 +48,7 @@ function NewPostForm() {
         formData.append(value, values[value])
     }
     const savedPostResponse = await fetch(
-        "http://localhost:3001/posts/",{
+        "https://4thyearproject-production.up.railway.app/posts/",{
             method: "POST",
             headers: { Authorization: `Bearer ${token}` },
             body: formData,
