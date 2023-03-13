@@ -27,7 +27,7 @@ export default function BidForm() {
     const newData = { newBid: values.newBid };
     console.log(newData);
     const updatedPostResponse = await fetch(
-      `4thyearproject-production.up.railway.app/posts/${_id}`,{
+      `https://4thyearproject-production.up.railway.app/posts/${_id}`,{
         method: "POST",
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", },
         body: JSON.stringify(newData),
@@ -40,7 +40,7 @@ export default function BidForm() {
 
   const getPost = async() => {
 
-    const response = await fetch(`4thyearproject-production.up.railway.app/posts/${_id}`,
+    const response = await fetch(`https://4thyearproject-production.up.railway.app/posts/${_id}`,
     {
         method: "GET",
     })

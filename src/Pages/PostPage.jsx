@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 export default function PostPage() {
   const navigate = useNavigate();
   const getPost = async() => {
-    const response = await fetch(`4thyearproject-production.up.railway.app/posts/${_id}`,
+    const response = await fetch(`https://4thyearproject-production.up.railway.app/posts/${_id}`,
     {
         method: "GET",
     })
@@ -59,7 +59,7 @@ export default function PostPage() {
                 alt={post?.title}
                 width="100%"
                 height="100%"
-                src={`4thyearproject-production.up.railway.app/assets/${picturePath}`}
+                src={`https://4thyearproject-production.up.railway.app/assets/${picturePath}`}
                 style={{ borderRadius: "3rem"}}
               />
             </Box>

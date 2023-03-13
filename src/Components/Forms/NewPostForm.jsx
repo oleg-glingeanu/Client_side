@@ -70,7 +70,7 @@ function NewPostForm() {
 
 
     const savedPostResponse = await fetch(
-        "4thyearproject-production.up.railway.app/posts/",{
+        "https://4thyearproject-production.up.railway.app/posts/",{
             method: "POST",
             headers: { Authorization: `Bearer ${token}` },
             body: formData,

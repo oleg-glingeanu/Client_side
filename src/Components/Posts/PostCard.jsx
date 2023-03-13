@@ -12,7 +12,7 @@ export default function PostCard({post}) {
         <Card>
           <CardMedia component='img'
               height='140'
-              image={`4thyearproject-production.up.railway.app/assets/${post.picturePath}`}>
+              image={`https://4thyearproject-production.up.railway.app/assets/${post.picturePath}`}>
           </CardMedia>
           <CardContent>
             <Typography gutterBottom variant='h5' component='div'>
