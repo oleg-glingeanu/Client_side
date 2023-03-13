@@ -27,7 +27,7 @@ export default function BidForm() {
     const newData = { newBid: values.newBid };
     console.log(newData);
     const updatedPostResponse = await fetch(
-      `http://localhost:3001/posts/${_id}`,{
+      `4thyearproject-production.up.railway.app/posts/${_id}`,{
         method: "POST",
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", },
         body: JSON.stringify(newData),
@@ -40,7 +40,7 @@ export default function BidForm() {
 
   const getPost = async() => {
 
-    const response = await fetch(`http://localhost:3001/posts/${_id}`,
+    const response = await fetch(`4thyearproject-production.up.railway.app/posts/${_id}`,
     {
         method: "GET",
     })
@@ -88,7 +88,7 @@ export default function BidForm() {
         alt={post?.title}
         width="80%"
         height="auto"
-        src={`http://localhost:3001/assets/${picturePath}`}
+        src={`4thyearproject-production.up.railway.app/assets/${picturePath}`}
         style={{ objectFit: "contain", borderRadius: "2rem" }}
       />
       </Box>

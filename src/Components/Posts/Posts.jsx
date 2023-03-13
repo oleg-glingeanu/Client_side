@@ -15,7 +15,7 @@ export default function Posts() {
 
 
   const getPosts = async () => {
-    const response = await fetch("http://localhost:3001/posts", {
+    const response = await fetch("4thyearproject-production.up.railway.app/posts", {
       method: "GET",
     });
     const data = await response.json();
@@ -23,7 +23,7 @@ export default function Posts() {
   };
 
   const getUsersPosts = async() => {
-    const response = await fetch(`http://localhost:3001/posts/${_id}/posts`,
+    const response = await fetch(`4thyearproject-production.up.railway.app/posts/${_id}/posts`,
     {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },

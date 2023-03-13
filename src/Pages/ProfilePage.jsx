@@ -27,7 +27,7 @@ function ProfilePage() {
   console.log(user._id);
 
   const getUserPosts = async() => {
-    const response = await fetch(`http://localhost:3001/posts/${_id}/posts`,
+    const response = await fetch(`4thyearproject-production.up.railway.app/posts/${_id}/posts`,
     {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },

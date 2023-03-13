@@ -21,7 +21,7 @@ export default function DeleteButton({postId, postUserId, text}) {
     }
 
     const delPost = async() => {
-        const response = await fetch(`http://localhost:3001/posts/${postId}`,
+        const response = await fetch(`4thyearproject-production.up.railway.app/posts/${postId}`,
         {
             method: "DELETE",
         })
