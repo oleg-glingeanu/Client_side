@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import {
   Search,
-  Message,
   DarkMode,
   LightMode,
   Notifications,
@@ -25,7 +24,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "../../Redux/store";
 import { useNavigate } from "react-router-dom";
-import FlexBetween from "../FlexBetween/FlexBetween";
+import NavFlexBetween from "../FlexBetween/NavFlexBetween";
 import logo from '../../Assets/Logo.png'
 const Navbar = () => {
   
@@ -44,8 +43,8 @@ const Navbar = () => {
   const fullName = `${user.firstName}`;
 
   return (
-    <FlexBetween padding="1rem 6%" backgroundColor={alt}>
-      <FlexBetween gap="1.75rem">
+    <NavFlexBetween padding="1rem 6%" backgroundColor={alt}>
+      <NavFlexBetween gap="1.75rem">
         <a href="/home">
           <img src={logo} width='35px' className='logo' alt="img"></img>
         </a>
@@ -65,7 +64,7 @@ const Navbar = () => {
           Antique Auctions
         </Typography>
         {isNonMobileScreens && (
-          <FlexBetween
+          <NavFlexBetween
             backgroundColor={neutralLight}
             borderRadius="9px"
             gap="3rem"
@@ -75,13 +74,13 @@ const Navbar = () => {
             <IconButton>
               <Search />
             </IconButton>
-          </FlexBetween>
+          </NavFlexBetween>
         )}
-      </FlexBetween>
+      </NavFlexBetween>
 
       {/* DESKTOP NAV */}
       {isNonMobileScreens ? (
-        <FlexBetween gap="2rem">
+        <NavFlexBetween gap="2rem">
           <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
               <DarkMode sx={{ fontSize: "25px" }} />
@@ -93,7 +92,7 @@ const Navbar = () => {
             <LibraryAddIcon sx={{ fontSize: "25px",color: dark }} />
           </IconButton>
           <IconButton onClick={() => navigate(`/notifications`)}>
-            <Notifications sx={{ fontSize: "25px" }} />
+            <Notifications sx={{ fontSize: "25px", color: dark }} />
           </IconButton>
           <IconButton onClick={() => navigate(`/profile/${_id}`)}>
             <PersonIcon sx={{ fontSize: "25px",color: dark }} />
@@ -124,7 +123,7 @@ const Navbar = () => {
               <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
             </Select>
           </FormControl>
-        </FlexBetween>
+        </NavFlexBetween>
       ) : (
         <IconButton
           onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
@@ -155,7 +154,7 @@ const Navbar = () => {
           </Box>
 
           {/* MENU ITEMS */}
-          <FlexBetween
+          <NavFlexBetween
             display="flex"
             flexDirection="column"
             justifyContent="center"
@@ -174,6 +173,9 @@ const Navbar = () => {
             </IconButton>
             <IconButton onClick={() => navigate("/newpost")}>
             <LibraryAddIcon sx={{ fontSize: "25px",color: dark }} />
+            </IconButton>
+            <IconButton onClick={() => navigate(`/profile/${_id}`)}>
+            <PersonIcon sx={{ fontSize: "25px",color: dark }} />
             </IconButton>
             <Notifications sx={{ fontSize: "25px" }} />
             <Help sx={{ fontSize: "25px" }} />
@@ -204,10 +206,10 @@ const Navbar = () => {
                 </MenuItem>
               </Select>
             </FormControl>
-          </FlexBetween>
+          </NavFlexBetween>
         </Box>
       )}
-    </FlexBetween>
+    </NavFlexBetween>
   );
 };
 

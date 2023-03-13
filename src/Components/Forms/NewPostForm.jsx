@@ -15,20 +15,39 @@ import Dropzone from 'react-dropzone';
 import FlexBetween from 'Components/FlexBetween/FlexBetween';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers';
+import ReactTagsInput from "react-tagsinput";
+import "react-tagsinput/react-tagsinput.css";
+
 
 const postSchema = yup.object().shape({
   title: yup.string().required("Required"),
   description: yup.string().required("Required"),
   picture: yup.string(),
   price:yup.number().required("Required"),
+  postDays:yup.number().required("Required").min(1).max(10)
 });
 
 const initialValuesPost = {
   title: "",
   description: "",
   picture: "",
-  price:""
+  price:"",
+  postDays:""
 }
+
+const daysOptions = [
+    { value: 0, label: '' },
+    { value: 1, label: '1 Day' },
+    { value: 2, label: '2 Days' },
+    { value: 3, label: '3 Days' },
+    { value: 4, label: '4 Days' },
+    { value: 5, label: '5 Days' },
+    { value: 6, label: '6 Days' },
+    { value: 7, label: '7 Days' },
+    { value: 8, label: '8 Days' },
+    { value: 9, label: '9 Days' },
+    { value: 10, label: '10 Days' },
+];
 
 function NewPostForm() {
 
@@ -44,11 +63,14 @@ function NewPostForm() {
     const fileName = `${values.picture.name.split(".")[0]}${randomString}.${values.picture.name.split(".")[1]}`;
     formData.append('picturePath', fileName)
     formData.append("userId", _id);
+    console.log(formData.values);
     for (let value in values){
         formData.append(value, values[value])
     }
+
+
     const savedPostResponse = await fetch(
-        "https://4thyearproject-production.up.railway.app/posts/",{
+        "http://localhost:3001/posts/",{
             method: "POST",
             headers: { Authorization: `Bearer ${token}` },
             body: formData,
@@ -57,7 +79,7 @@ function NewPostForm() {
     const savedPost = await savedPostResponse.json();
     console.log(savedPost);
     onSubmitProps.resetForm()
-  }
+    }
   
 
   const handleFormSubmit = async(values, onSubmitProps) =>{
@@ -150,17 +172,35 @@ function NewPostForm() {
                         helperText={touched.price && errors.price}
                         sx={{gridColumn: "span 4"}}
                         />
-                {/* <LocalizationProvider dateAdapter={AdapterMoment}>
-                    <DesktopDatePicker
-                    label="End Time"
-                    onChange={date => setFieldValue("endTime", date)}
-                    value={values.endTime}
-                    name="endTime"
-                    error={Boolean(touched.endTime) && Boolean(errors.endTime)}
-                    helperText={touched.endTime && errors.endTime}
-                    sx={{gridColumn: "span 4"}}
-                    />
-                </LocalizationProvider> */}
+
+
+                <TextField 
+                        label="Tags"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        name="tags"
+                        sx={{gridColumn: "span 4"}}
+                        />
+                
+                <TextField
+                        label="Select Number of Days for Post"
+                        select
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        value={values.postDays}
+                        name="postDays"
+                        error={Boolean(touched.postDays) && Boolean(errors.postDays)}
+                        sx={{gridColumn: "span 4"}}
+                        SelectProps={{
+                            native: true,
+                        }}
+                        >
+                        {daysOptions.map((option) => (
+                            <option key={option.value} value={option.value}>
+                            {option.label}
+                            </option>
+                        ))}
+                </TextField>
             </Box>
             {/* BUTTONS SECTION */}
             <Box

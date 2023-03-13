@@ -21,7 +21,7 @@ function ProfileWidget({ userId, picturePath }) {
     const main = palette.neutral.main;
 
     const getUser = async() => {
-        const response = await fetch(`https://4thyearproject-production.up.railway.app/users/${userId}`,
+        const response = await fetch(`http://localhost:3001/users/${userId}`,
         {
             method: "GET",
         })
@@ -56,7 +56,7 @@ function ProfileWidget({ userId, picturePath }) {
         onClick={() => navigate(`/profile/${userId}`)}
       >
         <FlexBetween gap="1rem">
-          <UserImage image={picturePath} />
+          <UserImage image={user.picturePath} />
           <Box>
             <Typography
               variant="h4"
@@ -95,31 +95,30 @@ function ProfileWidget({ userId, picturePath }) {
 
       {/* THIRD ROW */}
       <Box p="1rem 0">
-        <FlexBetween mb="0.5rem">
           <Typography color={medium}>Who's viewed your profile</Typography>
           <Typography color={main} fontWeight="500">
             {viewedProfile}
           </Typography>
-        </FlexBetween>
-        <FlexBetween>
           <Typography color={medium}>Impressions of your post</Typography>
           <Typography color={main} fontWeight="500">
-            {impressions}
+            3423
           </Typography>
-        </FlexBetween>
       </Box>
 
       <Divider />
 
       {/* FOURTH ROW */}
       <Box p="1rem 0">
+      <FlexBetween gap="1rem" mb="0.5rem">
+          <FlexBetween gap="1rem">
         <Typography fontSize="1rem" color={main} fontWeight="500" mb="1rem">
           Social Profiles
         </Typography>
-
+        </FlexBetween>
+      </FlexBetween>
         <FlexBetween gap="1rem" mb="0.5rem">
           <FlexBetween gap="1rem">
-            <img src="https://4thyearproject-production.up.railway.app/assets/twitter.png" alt="twitter" />
+            <img src="http://localhost:3001/assets/twitter.png" alt="twitter" />
             <Box>
               <Typography color={main} fontWeight="500">
                 Twitter
@@ -132,7 +131,7 @@ function ProfileWidget({ userId, picturePath }) {
 
         <FlexBetween gap="1rem">
           <FlexBetween gap="1rem">
-            <img src="https://4thyearproject-production.up.railway.app/assets/linkedin.png" alt="linkedin" />
+            <img src="http://localhost:3001/assets/linkedin.png" alt="linkedin" />
             <Box>
               <Typography color={main} fontWeight="500">
                 Linkedin

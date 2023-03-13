@@ -9,7 +9,7 @@ export default function UserImage({image, size="60px"}){
             width={size}
             height={size}
             alt="user_pfp"
-            src={`https://4thyearproject-production.up.railway.app/assets/${image}`}
+            src={`http://localhost:3001/assets/${image}`}
         />
     </Box>
   )

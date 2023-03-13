@@ -1,35 +1,61 @@
 import ProfileWidget from "Components/Widgets/ProfileWidget"
 import Navbar from "Components/NavBar/NavBar"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector} from "react-redux"
 import { Box, useMediaQuery, Grid, Typography, useTheme} from "@mui/material"
-import { useEffect } from "react"
-import { setUserPosts } from "../Redux/store";
 import PostCard from "Components/Posts/PostCard"
 import LinearProgress from '@mui/material/LinearProgress';
 import PostsFlexBetween from "Components/FlexBetween/PostsFlexBetween"
-
+import { useState, useEffect } from "react"
+import { useParams } from "react-router-dom";
+import Pagination from '../Components/Widgets/Pagination/Pagination';
 
 function ProfilePage() {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-  const { _id, picturePath } = useSelector((state) => state.user);
-  const userPosts = useSelector((state) => state.userPosts)
   const { palette } = useTheme();
   const medium = palette.neutral.medium;
-  console.log(userPosts)
+  const {_id} = useParams();
+  const token = useSelector((state) => state.token)
+  const [userPosts, setUserPosts] = useState([])
+  const user = useSelector((state) => state.user)
+  const [isUser, setisUser] = useState(false)
+  // Pagination 
+  const [currentPage, setCurrentPage] = useState(1)
+  const [postsPerPage, setPostsPerPage] = useState(6)
+  const lastPostIndex = currentPage * postsPerPage
+  const firstPostIndex = lastPostIndex - postsPerPage
+  const pagePosts = userPosts.slice(firstPostIndex, lastPostIndex)
+  console.log(user._id);
 
+  const getUserPosts = async() => {
+    const response = await fetch(`http://localhost:3001/posts/${_id}/posts`,
+    {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+    })
+    const data = await response.json();
+    console.log(data);
+    setUserPosts(data);
+  }
+
+  useEffect(()=>{
+    getUserPosts();
+    if(user._id == _id){
+      setisUser(true);
+    }
+  },[])
   return (
     <>
     <Box>
       <Navbar />
       <Box
         width="100%"
-        padding={"2rem 6%"}
-        display={isNonMobileScreens ? "flex" : "block"}
+        padding={"2rem 10%"}
+        display={isNonMobileScreens ? "" : "block"}
         gap="0.5rem"
         justifyContent="space-between"
       >
       <Box flexBasis={isNonMobileScreens ? "45%" : undefined} marginTop="1rem">
-          <ProfileWidget userId={_id} picturePath={picturePath} />
+          <ProfileWidget userId={_id}/>
           
       </Box>
       <PostsFlexBetween gap="1.5rem">
@@ -47,27 +73,32 @@ function ProfilePage() {
           sx={{textAlign :"center"
           }}
         >
-          Your Posts
+        
+        {isUser ? 
+            <>Your Posts</>
+              : 
+            <>Users Posts</>}
     </Typography>
-      {!userPosts.length ? <LinearProgress />:(
-        <Grid 
-          container
-          spacing={{ xs: 1, }}
-          justifyContent="center"
-          sx={{ margin: `20px 4px 10px 4px` }}
-          columns={{ xs: 2, sm: 2, md: 12 }} 
-          display={isNonMobileScreens? "flex" : "block"}
-        > 
-        {userPosts.map(post=>(
-            <Grid key={post._id} item xs={2} sm={4} md={4} display="flex" flexDirection={'column'} alignItems="center">
-              <PostCard post={post} />
-            </Grid>
-          )
-        )}
-      </Grid>)}
-        </Box>
+    {!userPosts.length ? <LinearProgress />:
+      (
+      <>
+      <Grid container spacing={3}>
+        {pagePosts.map(post => (
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={post.id}>
+            <PostCard post={post} />
+          </Grid>
+        ))}
+      </Grid>
+      <Pagination 
+        totalPosts={userPosts.length}
+        postsPerPage={postsPerPage} 
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+        />
+      </>
+      )}
       </Box>
-
+        </Box>
     </Box>
     </>
   )

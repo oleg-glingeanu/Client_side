@@ -6,11 +6,13 @@ import ErrorPage from "Pages/ErrorPage"
 import ProfilePage from "Pages/ProfilePage"
 import NotificationsPage from "Pages/NotificationsPage"
 import PostPage from "Pages/PostPage"
+import BidPage from "Pages/BidPage"
 import { useMemo } from "react"
 import { useSelector } from "react-redux"
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material"
 import { themeSettings } from "Styles/Theme"
 import 'ScrollBar.css'
+
 export default function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode])
@@ -37,6 +39,10 @@ export default function App() {
             <Route
               path="/post/:_id"
               element={isAuth ? <PostPage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/post/:_id/bid"
+              element={isAuth ? <BidPage /> : <Navigate to="/" />}
             />
             <Route
               path="/notifications"
