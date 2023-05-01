@@ -1,10 +1,11 @@
 import { Box, Typography, useTheme} from "@mui/material";
+import React from "react";
+
 
 function Footer() {
 
   const { palette } = useTheme();
   const neutralLight = palette.neutral.light;
-  const dark = palette.neutral.dark;
   return (
     <Box marginTop="70px" padding="40px 0" backgroundColor={neutralLight.light}>
       <Box

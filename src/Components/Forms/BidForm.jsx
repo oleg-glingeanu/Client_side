@@ -6,7 +6,7 @@ import {
   Typography,
 
 } from '@mui/material'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, React } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from "react-router-dom";
 import { Formik } from 'formik'
@@ -18,14 +18,19 @@ export default function BidForm() {
   const isNonMobile = useMediaQuery("(min-width:600px)")
   const navigate = useNavigate();
   const {_id} = useParams();
-  const [value, setValue] = useState("description");
+  const user = useSelector((state) => state.user);
   const [post, setPost] = useState(null)
-  const token = useSelector((state) => state.token);
+  const token = useSelector((state) => state.token); 
+
 
   const updatePost = async (values, onSubmitProps) => {
-    
-    const newData = { newBid: values.newBid };
-    console.log(newData);
+    const newData = { newBid: values.newBid, currentBidUserName: user.firstName };
+    const notificationData = {
+      user_who_left_review: user._id,
+      user_who_left_review_name: user.firstName,
+      user_who_gets_review: userId,
+      review: `${user.firstName} has placed a bid of ${values.newBid} on ${title}`,
+    }
     const updatedPostResponse = await fetch(
       `https://4thyearproject-production.up.railway.app/posts/${_id}`,{
         method: "POST",
@@ -33,8 +38,17 @@ export default function BidForm() {
         body: JSON.stringify(newData),
       }
     )
+    const notificationResponse = await fetch(
+      `https://4thyearproject-production.up.railway.app/users/${_id}/addNotification`,{
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", },
+        body: JSON.stringify(notificationData),
+      }
+    )
     const savedUpdatedPost = await updatedPostResponse.json();
+    const notificationUpdate = await notificationResponse.json();
     console.log(savedUpdatedPost);
+    console.log(notificationUpdate)
     onSubmitProps.resetForm();
   }
 
@@ -60,7 +74,9 @@ export default function BidForm() {
   const {
     price,
     picturePath,
-    currentBid
+    currentBid,
+    userId,
+    title
   } = post
 
   // Small Schema for Formik
@@ -88,7 +104,7 @@ export default function BidForm() {
         alt={post?.title}
         width="80%"
         height="auto"
-        src={`4thyearproject-production.up.railway.app/assets/${picturePath}`}
+        src={`https://4thyearproject-production.up.railway.app/assets/${picturePath}`}
         style={{ objectFit: "contain", borderRadius: "2rem" }}
       />
       </Box>
@@ -117,8 +133,6 @@ export default function BidForm() {
             handleBlur,
             handleChange,
             handleSubmit,
-            setFieldValue,
-            resetForm
         })=>(
           <form onSubmit={handleSubmit}>
             <Box

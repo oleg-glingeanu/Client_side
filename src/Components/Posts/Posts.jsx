@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, React } from 'react'
 import { Grid} from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import LinearProgress from '@mui/material/LinearProgress';
@@ -11,7 +11,7 @@ export default function Posts() {
   const token = useSelector((state) => state.token)
   const {_id} = useSelector((state) => state.user)
   const [currentPage, setCurrentPage] = useState(1)
-  const [postsPerPage, setPostsPerPage] = useState(8)
+  const [postsPerPage] = useState(8)
 
 
   const getPosts = async () => {

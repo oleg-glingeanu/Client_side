@@ -1,5 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, React } from 'react';
 import './TimerCss.css'
+import PropTypes from 'prop-types';
+
+TimerWidget.propTypes = {
+  expiryDate: PropTypes.string.isRequired,
+}
 
 function calculateRemainingTime(endDate) {
     const now = new Date();
@@ -11,6 +16,7 @@ function calculateRemainingTime(endDate) {
     const minutes = Math.floor((remainingTime / 1000 / 60) % 60);
     const hours = Math.floor((remainingTime / (1000 * 60 * 60)) % 24);
     const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+    
     return(
         <div>
             <div className="countdown-timer">

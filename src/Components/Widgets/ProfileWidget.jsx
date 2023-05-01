@@ -2,24 +2,32 @@ import {
     ManageAccountsOutlined,
     EditOutlined,
     LocationOnOutlined,
-    WorkOutlineOutlined,
 } from "@mui/icons-material";
-import { Box, Typography, Divider, useTheme } from "@mui/material";
+import { useSelector, useDispatch} from "react-redux"
+import { Box, Typography, Divider, useTheme, Button } from "@mui/material";
 import UserImage from "./UserImage";
 import FlexBetween from "../FlexBetween/FlexBetween";
 import WidgetWrapper from "../FlexBetween/WidgetWrapper";
-import { useEffect, useState } from "react";
+import { useEffect, useState,React } from "react";
 import { useNavigate } from "react-router-dom";
+import { setFollowing } from "Redux/store";
+import PropTypes from 'prop-types';
 
-function ProfileWidget({ userId, picturePath }) {
 
-    const [user, setUser] = useState(null);
+function ProfileWidget({ userId }) {
+
+    const [profileuser, setUser] = useState(null);
+    const currentUserFollowing = useSelector((state) => state.user.following)
+    const user = useSelector((state) => state.user)
+    const token = useSelector((state) => state.token)
     const { palette } = useTheme();
+    const follow = "Follow";
+    const unfollow = "Unfollow";
     const navigate = useNavigate();
     const dark = palette.neutral.dark;
     const medium = palette.neutral.medium;
     const main = palette.neutral.main;
-
+    const dispatch = useDispatch();
     const getUser = async() => {
         const response = await fetch(`https://4thyearproject-production.up.railway.app/users/${userId}`,
         {
@@ -32,7 +40,41 @@ function ProfileWidget({ userId, picturePath }) {
         getUser();
     }, [])
 
-    if(!user){
+    const patchFollow = async () => {
+      const response = await fetch(
+        `https://4thyearproject-production.up.railway.app/users/${user._id}/${userId}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      dispatch(setFollowing({ friends: data }));
+      navigate(`/followed/${userId}/follow`)
+    };
+
+    const patchUnFollow = async () => {
+      const response = await fetch(
+        `https://4thyearproject-production.up.railway.app/users/${user._id}/${userId}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      dispatch(setFollowing({ friends: data }));
+      navigate(`/followed/${userId}/unfollow`)
+    };
+
+    if(!profileuser){
         return null;
     }
 
@@ -40,13 +82,14 @@ function ProfileWidget({ userId, picturePath }) {
         firstName,
         lastName,
         location,
-        occupation,
         viewedProfile,
-        impressions,
         following,
-    } = user;
+    } = profileuser;
 
+    console.log(currentUserFollowing)
 
+    const isfollowed = currentUserFollowing.find((follower) => follower._id === userId);
+    console.log(isfollowed)
     return (
       <WidgetWrapper>
         <FlexBetween>
@@ -56,18 +99,12 @@ function ProfileWidget({ userId, picturePath }) {
         onClick={() => navigate(`/profile/${userId}`)}
       >
         <FlexBetween gap="1rem">
-          <UserImage image={user.picturePath} />
+          <UserImage image={profileuser.picturePath} />
           <Box>
             <Typography
               variant="h4"
               color={dark}
               fontWeight="500"
-              sx={{
-                "&:hover": {
-                  color: palette.primary.light,
-                  cursor: "pointer",
-                },
-              }}
             >
               {firstName} {lastName}
             </Typography>
@@ -75,27 +112,26 @@ function ProfileWidget({ userId, picturePath }) {
           </Box>
         </FlexBetween>
       </FlexBetween>
-      <ManageAccountsOutlined />
+      {user._id === profileuser._id ? <><ManageAccountsOutlined  onClick={() => navigate(`/editProfile/${user._id}`)} /> </> :<> </> }
     </FlexBetween>
       <Divider />
 
       {/* SECOND ROW */}
       <Box p="1rem 0">
+      <FlexBetween gap="1rem">
         <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
           <LocationOnOutlined fontSize="large" sx={{ color: main }} />
           <Typography color={medium}>{location}</Typography>
         </Box>
-        <Box display="flex" alignItems="center" gap="1rem">
-          <WorkOutlineOutlined fontSize="large" sx={{ color: main }} />
-          <Typography color={medium}>{occupation}</Typography>
-        </Box>
+        </FlexBetween>
       </Box>
 
       <Divider />
 
       {/* THIRD ROW */}
       <Box p="1rem 0">
-          <Typography color={medium}>Who's viewed your profile</Typography>
+      <FlexBetween gap="1rem">
+          <Typography color={medium}>Who&apos;s viewed your profile</Typography>
           <Typography color={main} fontWeight="500">
             {viewedProfile}
           </Typography>
@@ -103,6 +139,7 @@ function ProfileWidget({ userId, picturePath }) {
           <Typography color={main} fontWeight="500">
             3423
           </Typography>
+          </FlexBetween>
       </Box>
 
       <Divider />
@@ -118,7 +155,7 @@ function ProfileWidget({ userId, picturePath }) {
       </FlexBetween>
         <FlexBetween gap="1rem" mb="0.5rem">
           <FlexBetween gap="1rem">
-            <img src="4thyearproject-production.up.railway.app/assets/twitter.png" alt="twitter" />
+            <img src="https://4thyearproject-production.up.railway.app/assets/twitter.png" alt="twitter" />
             <Box>
               <Typography color={main} fontWeight="500">
                 Twitter
@@ -131,20 +168,69 @@ function ProfileWidget({ userId, picturePath }) {
 
         <FlexBetween gap="1rem">
           <FlexBetween gap="1rem">
-            <img src="4thyearproject-production.up.railway.app/assets/linkedin.png" alt="linkedin" />
+            <img src="https://4thyearproject-production.up.railway.app/assets/linkedin.png" alt="linkedin" />
             <Box>
               <Typography color={main} fontWeight="500">
                 Linkedin
               </Typography>
               <Typography color={medium}>Network Platform</Typography>
             </Box>
+            
           </FlexBetween>
           <EditOutlined sx={{ color: main }} />
+          
         </FlexBetween>
+        
       </Box>
+      <FlexBetween gap="1rem">
+      {user._id === profileuser._id ? <></> : 
+      isfollowed ? <Button 
+                fullWidth
+                size="small"
+                type="submit"
+                onClick={() => patchUnFollow()}
+                sx={{
+                    p: "1rem",
+                    width: "50%",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginTop: "1rem",
+                    backgroundColor: "#FFFFFF",
+                    color: "#000000",
+                    "&:hover" : { color: " #808080"}
+                }}>
+                {`${unfollow} User`}
+                
+                </Button> :
+      <Button 
+                fullWidth
+                size="small"
+                type="submit"
+                onClick={() => patchFollow()}
+                sx={{
+                    p: "1rem",
+                    width: "50%",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginTop: "1rem",
+                    backgroundColor: "#458eff",
+                    color: "#1A1A1A",
+                    "&:hover" : { color: "#125688"}
+                }}>
+                {`${follow} user`}
+                
+                </Button>
+                
+      }
+      </FlexBetween>
       </WidgetWrapper>
     )
 
 }
   
-  export default ProfileWidget
+
+ProfileWidget.propTypes = {
+  userId: PropTypes.string.isRequired,
+}
+
+export default ProfileWidget

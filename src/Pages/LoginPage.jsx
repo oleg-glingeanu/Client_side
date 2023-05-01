@@ -1,6 +1,8 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-import RegisterForm from "Components/Forms/RegisterForm";
+import RegisterForm from "../Components/Forms/RegisterForm";
 import logo from '../Assets/Logo.png'
+import React from "react";
+
 
 export default function LoginPage() {
   const theme = useTheme();
@@ -35,4 +37,4 @@ export default function LoginPage() {
     <RegisterForm />
   </Box>
 </Box>
-};
+}

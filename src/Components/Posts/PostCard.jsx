@@ -1,7 +1,9 @@
 import { Box, Card, CardContent, Typography, CardActions, Button, CardMedia } from '@mui/material'
 import { useNavigate } from "react-router-dom";
-import FlexBetween from 'Components/FlexBetween/FlexBetween';
-import SmallTimerWidget from 'Components/Widgets/TimerWidgets/SmallTimerWidget';
+import FlexBetween from '../FlexBetween/FlexBetween';
+import SmallTimerWidget from '../Widgets/TimerWidgets/SmallTimerWidget';
+import React from "react";
+import PropTypes from 'prop-types';
 
 export default function PostCard({post}) {
   const navigate = useNavigate();
@@ -10,7 +12,8 @@ export default function PostCard({post}) {
     <FlexBetween>
       <Box width='300px' sx={{ margin: `20px 4px 10px 4px` }}>
         <Card>
-          <CardMedia component='img'
+          <CardMedia 
+              component='img'
               height='140'
               image={`https://4thyearproject-production.up.railway.app/assets/${post.picturePath}`}>
           </CardMedia>
@@ -19,7 +22,7 @@ export default function PostCard({post}) {
               {post.title}
             </Typography>
             <Typography variant='body2' color='text.secondary'>
-              {post.description}
+              {post.shortDescription}
             </Typography>
             <Typography variant='body2' color='text.secondary' onClick={() => {navigate(`/profile/${post.userId}`)
             console.log(post.userId)} } sx={{
@@ -49,3 +52,17 @@ export default function PostCard({post}) {
     </FlexBetween>
   )
 }
+
+PostCard.propTypes = {
+  post: PropTypes.shape({
+    picturePath: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    shortDescription: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
+    firstName: PropTypes.string.isRequired,
+    currentBid: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    endTime: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+  }).isRequired,
+};

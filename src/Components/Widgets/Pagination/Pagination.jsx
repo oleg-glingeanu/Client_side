@@ -1,4 +1,15 @@
 import './Pagination.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+
+Pagination.propTypes = {
+  totalPosts: PropTypes.number.isRequired,
+  postsPerPage: PropTypes.number.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired
+}
+
+
 
 export default function Pagination({
   totalPosts, 

@@ -1,4 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, React } from 'react';
+import PropTypes from 'prop-types';
+
+SmallTimerWidget.propTypes = {
+  expiryDate: PropTypes.string.isRequired,
+}
+
 
 function calculateRemainingTime(endDate) {
     const now = new Date();
@@ -12,6 +18,8 @@ function calculateRemainingTime(endDate) {
     const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
     return `${days}D, ${hours}H, ${minutes}M, and ${seconds}s`;
 }
+
+
 export default function SmallTimerWidget({expiryDate}) {
 
     const endDate = new Date(expiryDate).toUTCString(); 

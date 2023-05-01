@@ -1,13 +1,13 @@
 import ProfileWidget from "Components/Widgets/ProfileWidget"
 import Navbar from "Components/NavBar/NavBar"
 import { useSelector} from "react-redux"
-import { Box, useMediaQuery, Grid, Typography, useTheme} from "@mui/material"
+import { Box, useMediaQuery, Grid, Typography, useTheme, Button,} from "@mui/material"
 import PostCard from "Components/Posts/PostCard"
-import LinearProgress from '@mui/material/LinearProgress';
 import PostsFlexBetween from "Components/FlexBetween/PostsFlexBetween"
 import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Pagination from '../Components/Widgets/Pagination/Pagination';
+import React from "react"
 
 function ProfilePage() {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -20,12 +20,13 @@ function ProfilePage() {
   const [isUser, setisUser] = useState(false)
   // Pagination 
   const [currentPage, setCurrentPage] = useState(1)
-  const [postsPerPage, setPostsPerPage] = useState(6)
+  const [postsPerPage ] = useState(6)
   const lastPostIndex = currentPage * postsPerPage
   const firstPostIndex = lastPostIndex - postsPerPage
   const pagePosts = userPosts.slice(firstPostIndex, lastPostIndex)
+  const navigate = useNavigate();
   console.log(user._id);
-
+  console.log(_id);
   const getUserPosts = async() => {
     const response = await fetch(`https://4thyearproject-production.up.railway.app/posts/${_id}/posts`,
     {
@@ -79,7 +80,14 @@ function ProfilePage() {
               : 
             <>Users Posts</>}
     </Typography>
-    {!userPosts.length ? <LinearProgress />:
+    {!userPosts.length ? <Typography
+          fontWeight="underline"
+          fontSize="clamp(1rem, 1.75rem, 2.25rem)"
+          color="white"
+          sx={{textAlign :"center"
+          }}
+        >User Has No Active Posts !</Typography>
+        :
       (
       <>
       <Grid container spacing={3}>
@@ -97,8 +105,28 @@ function ProfilePage() {
         />
       </>
       )}
+      {_id === user._id ? <></> :
+      <Button 
+                fullWidth
+                size="small"
+                type="submit"
+                onClick={() => navigate(`/user/${_id}/review`)}
+                sx={{
+                    p: "1rem",
+                    marginTop: "1rem",
+                    backgroundColor: "#ce93d8",
+                    color: "#1A1A1A",
+                    "&:hover" : { color: "#ce93d7"}
+                }}>
+                {"Leave a review"}
+                
+                </Button>
+                
+      }
       </Box>
+
         </Box>
+        
     </Box>
     </>
   )

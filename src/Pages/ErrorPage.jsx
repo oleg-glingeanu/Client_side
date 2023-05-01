@@ -2,6 +2,8 @@ import { Box, Typography, useTheme, useMediaQuery,Button } from "@mui/material";
 import { useSelector } from "react-redux"
 import ErrorIcon from '@mui/icons-material/Error';
 import { useNavigate } from 'react-router-dom';
+import React from "react";
+
 
 function ErrorPage() {
     const theme = useTheme();

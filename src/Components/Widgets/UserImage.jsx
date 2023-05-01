@@ -1,5 +1,11 @@
 import { Box } from "@mui/material";
+import React from "react";
+import PropTypes from 'prop-types';
 
+UserImage.propTypes = {
+  image : PropTypes.string.isRequired,
+  size : PropTypes.string.isRequired
+}
 
 export default function UserImage({image, size="60px"}){
   return (

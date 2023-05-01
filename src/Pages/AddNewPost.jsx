@@ -2,6 +2,7 @@ import NewPostForm from "Components/Forms/NewPostForm"
 import Navbar from "Components/NavBar/NavBar"
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Footer from "Components/Footer/Footer";
+import React from "react";
 
 function AddNewPost() {
     const theme = useTheme();

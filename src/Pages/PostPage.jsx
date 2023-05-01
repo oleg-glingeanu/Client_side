@@ -1,16 +1,16 @@
 import { Box,Typography, useMediaQuery } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, React } from 'react';
 import Navbar from "Components/NavBar/NavBar"
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Footer from "Components/Footer/Footer";
 import TimerWidget from "Components/Widgets/TimerWidgets/TimerWidget";
 import DeleteButton from "Components/Widgets/Buttons/DeleteButton";
 import BidButton from "Components/Widgets/Buttons/BidButton";
 import PostCard from "Components/Posts/PostCard";
 import { useSelector } from 'react-redux'
-import { useNavigate } from "react-router-dom";
+import ReviewsWidget from "Components/Widgets/Review/ReviewsWidget";
 
 
 export default function PostPage() {
@@ -41,13 +41,14 @@ export default function PostPage() {
     picturePath,
     endTime,
     userId,
-    currentBid
+    currentBid,
+    categories
     } = post
 
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
-
+    console.log(post);
     return (
       <>
         <Navbar />
@@ -55,13 +56,17 @@ export default function PostPage() {
           <Box display="flex" flexWrap="wrap" columnGap="40px">
             {/* IMAGES */}
             <Box flex="1 1 40%" mb="40px" >
-              <img
-                alt={post?.title}
-                width="100%"
-                height="100%"
-                src={`https://4thyearproject-production.up.railway.app/assets/${picturePath}`}
-                style={{ borderRadius: "3rem"}}
-              />
+              <div style={{
+                marginTop: "5rem",
+                backgroundColor : "black",
+                width: isNonMobileScreens ? "691.2px" : 'auto',
+                height : isNonMobileScreens ? "460.8px" : 'auto',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: "2rem"}}>
+                <img src={`https://4thyearproject-production.up.railway.app/assets/${picturePath}`} style={{maxWidth: "100%", maxHeight: "100%", borderRadius: "2rem"}} />
+              </div>
             </Box>
   
             {/* ACTIONS */}
@@ -75,48 +80,54 @@ export default function PostPage() {
               <DeleteButton postId={_id} postUserId={userId} text={"Delete"} />
   
               {/* CATEGORIES */}
-              <Box mb="40px">
-                <Typography gutterBottom>CATEGORIES: antique, vintage, old, auction</Typography>
-              </Box>
+                <Box mb="40px">
+                <Typography variant="h3" gutterBottom>CATEGORIES
+                    {categories.map(category => (
+                      " #" + category + ", "
+                    ))}
+                    </Typography>
+                </Box>
   
               {/* TIMER */}
-              <Box mb="20px">
-                <Typography variant="h3" gutterBottom>Time Remaining</Typography>
-                <Box display="flex" flexWrap="wrap" columnGap="40px">
-                  <Box
-                    flex="1 1 20%"
-                    sx={{
-                      width: isNonMobileScreens ? '10%' : 'auto',
-                      height: isNonMobileScreens ? 'auto' : '100%',
-                    }}
-                  >
-                    <TimerWidget expiryDate={endTime} />
+                <Box mb="20px">
+                  <Typography variant="h3" gutterBottom>Time Remaining</Typography>
+                  <Box display="flex" flexWrap="wrap" columnGap="40px">
+                    <Box
+                      flex="1 1 20%"
+                      sx={{
+                        width: isNonMobileScreens ? '10%' : 'auto',
+                        height: isNonMobileScreens ? 'auto' : '100%',
+                      }}
+                    >
+                      <TimerWidget expiryDate={endTime} />
+                    </Box>
                   </Box>
                 </Box>
+                <Box mb="40px">
+                  <Typography gutterBottom onClick={() => {navigate(`/profile/${post.userId}`)}} sx={{
+                  "&:hover": {
+                    color: "lightBlue",
+                    cursor: "pointer",
+                  },
+                }}>Posted By: {post.firstName} {post.lastName}</Typography>
+                </Box>
               </Box>
-              <Box mb="40px">
-                <Typography gutterBottom onClick={() => {navigate(`/profile/${post.userId}`)}} sx={{
-                "&:hover": {
-                  color: "lightBlue",
-                  cursor: "pointer",
-                },
-              }}>Posted By: {post.firstName} {post.lastName}</Typography>
               </Box>
-            </Box>
-          </Box>
           
         {/* INFORMATION */}
         <Box m="20px 0">
         <Tabs value={value} onChange={handleChange}>
-          <Tab label="DESCRIPTION" value="description" />
-          <Tab label="REVIEWS" value="reviews" />
+          <Tab label="Post DESCRIPTION" value="description" />
+          <Tab label="User Reviews" value="reviews" />
         </Tabs>
         </Box>
         <Box display="flex" flexWrap="wrap" gap="15px">
           {value === "description" && (
             <div>{description}</div>
           )}
-          {value === "reviews" && <div>reviews</div>}
+          {value === "reviews" && <div>
+            <ReviewsWidget _id={userId}></ReviewsWidget>
+          </div>}
         </Box>
   
         {/* RELATED ITEMS */}

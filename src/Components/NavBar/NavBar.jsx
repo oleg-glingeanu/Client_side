@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, React } from "react";
 import {
   Box,
   IconButton,
@@ -39,8 +39,13 @@ const Navbar = () => {
   const dark = theme.palette.neutral.dark;
   const background = theme.palette.background.default;
   const alt = theme.palette.background.alt;
-
   const fullName = `${user.firstName}`;
+  const [search, setSearch] = useState('');
+
+  const handleSearch = () => {
+    console.log(search);
+    navigate(`/search/${search}`)
+  };
 
   return (
     <NavFlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -70,8 +75,13 @@ const Navbar = () => {
             gap="3rem"
             padding="0.1rem 1.5rem"
           >
-            <InputBase placeholder="Search..." />
-            <IconButton>
+            <InputBase
+            placeholder="Search..." 
+            inputProps={{ "aria-label": "search" }}
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            />
+            <IconButton onClick={handleSearch}>
               <Search />
             </IconButton>
           </NavFlexBetween>
