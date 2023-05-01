@@ -32,14 +32,14 @@ export default function BidForm() {
       review: `${user.firstName} has placed a bid of ${values.newBid} on ${title}`,
     }
     const updatedPostResponse = await fetch(
-      `https://4thyearproject-production.up.railway.app/posts/${_id}`,{
+      `https://serverside-production.up.railway.app/posts/${_id}`,{
         method: "POST",
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", },
         body: JSON.stringify(newData),
       }
     )
     const notificationResponse = await fetch(
-      `https://4thyearproject-production.up.railway.app/users/${_id}/addNotification`,{
+      `https://serverside-production.up.railway.app/users/${_id}/addNotification`,{
         method: "POST",
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", },
         body: JSON.stringify(notificationData),
@@ -54,7 +54,7 @@ export default function BidForm() {
 
   const getPost = async() => {
 
-    const response = await fetch(`https://4thyearproject-production.up.railway.app/posts/${_id}`,
+    const response = await fetch(`https://serverside-production.up.railway.app/posts/${_id}`,
     {
         method: "GET",
     })
@@ -104,7 +104,7 @@ export default function BidForm() {
         alt={post?.title}
         width="80%"
         height="auto"
-        src={`https://4thyearproject-production.up.railway.app/assets/${picturePath}`}
+        src={`https://serverside-production.up.railway.app/assets/${picturePath}`}
         style={{ objectFit: "contain", borderRadius: "2rem" }}
       />
       </Box>

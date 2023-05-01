@@ -28,7 +28,7 @@ export default function ReviewForm() {
       revieweeId: _id};
     console.log(newData);
     const updatedPostResponse = await fetch(
-      `https://4thyearproject-production.up.railway.app/users/${_id}/leaveReview`,{
+      `https://serverside-production.up.railway.app/users/${_id}/leaveReview`,{
         method: "POST",
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", },
         body: JSON.stringify(newData),
@@ -39,7 +39,7 @@ export default function ReviewForm() {
     onSubmitProps.resetForm();
   }
   const getUser = async() => {
-    const response = await fetch(`https://4thyearproject-production.up.railway.app/users/${_id}`,
+    const response = await fetch(`https://serverside-production.up.railway.app/users/${_id}`,
     {
         method: "GET",
     })

@@ -102,7 +102,7 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={`https://4thyearproject-production.up.railway.app/assets/${user.picturePath}`}
+                  src={`https://serverside-production.up.railway.app/assets/${user.picturePath}`}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
