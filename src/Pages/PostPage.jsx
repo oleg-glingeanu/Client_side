@@ -16,7 +16,7 @@ import ReviewsWidget from "Components/Widgets/Review/ReviewsWidget";
 export default function PostPage() {
   const navigate = useNavigate();
   const getPost = async() => {
-    const response = await fetch(`https://4thyearproject-production.up.railway.app/posts/${_id}`,
+    const response = await fetch(`https://serverside-production.up.railway.app/posts/${_id}`,
     {
         method: "GET",
     })
@@ -65,7 +65,7 @@ export default function PostPage() {
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: "2rem"}}>
-                <img src={`https://4thyearproject-production.up.railway.app/assets/${picturePath}`} style={{maxWidth: "100%", maxHeight: "100%", borderRadius: "2rem"}} />
+                <img src={`https://serverside-production.up.railway.app/assets/${picturePath}`} style={{maxWidth: "100%", maxHeight: "100%", borderRadius: "2rem"}} />
               </div>
             </Box>
   

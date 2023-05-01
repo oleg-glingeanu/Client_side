@@ -29,7 +29,7 @@ function ProfileWidget({ userId }) {
     const main = palette.neutral.main;
     const dispatch = useDispatch();
     const getUser = async() => {
-        const response = await fetch(`https://4thyearproject-production.up.railway.app/users/${userId}`,
+        const response = await fetch(`https://serverside-production.up.railway.app/users/${userId}`,
         {
             method: "GET",
         })
@@ -42,7 +42,7 @@ function ProfileWidget({ userId }) {
 
     const patchFollow = async () => {
       const response = await fetch(
-        `https://4thyearproject-production.up.railway.app/users/${user._id}/${userId}`,
+        `https://serverside-production.up.railway.app/users/${user._id}/${userId}`,
         {
           method: "PATCH",
           headers: {
@@ -59,7 +59,7 @@ function ProfileWidget({ userId }) {
 
     const patchUnFollow = async () => {
       const response = await fetch(
-        `https://4thyearproject-production.up.railway.app/users/${user._id}/${userId}`,
+        `https://serverside-production.up.railway.app/users/${user._id}/${userId}`,
         {
           method: "PATCH",
           headers: {
@@ -155,7 +155,7 @@ function ProfileWidget({ userId }) {
       </FlexBetween>
         <FlexBetween gap="1rem" mb="0.5rem">
           <FlexBetween gap="1rem">
-            <img src="https://4thyearproject-production.up.railway.app/assets/twitter.png" alt="twitter" />
+            <img src="https://serverside-production.up.railway.app/assets/twitter.png" alt="twitter" />
             <Box>
               <Typography color={main} fontWeight="500">
                 Twitter
@@ -168,7 +168,7 @@ function ProfileWidget({ userId }) {
 
         <FlexBetween gap="1rem">
           <FlexBetween gap="1rem">
-            <img src="https://4thyearproject-production.up.railway.app/assets/linkedin.png" alt="linkedin" />
+            <img src="https://serverside-production.up.railway.app/assets/linkedin.png" alt="linkedin" />
             <Box>
               <Typography color={main} fontWeight="500">
                 Linkedin

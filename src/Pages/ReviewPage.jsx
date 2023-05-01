@@ -18,7 +18,7 @@ export default function ReviewPage() {
     const { palette } = useTheme();
     const dark = palette.neutral.dark;
     const getUserInfo = async() => {
-        const response = await fetch(`https://4thyearproject-production.up.railway.app/users/${_id}`,
+        const response = await fetch(`https://serverside-production.up.railway.app/users/${_id}`,
         {
             method: "GET",
             headers: { Authorization: `Bearer ${token}` },

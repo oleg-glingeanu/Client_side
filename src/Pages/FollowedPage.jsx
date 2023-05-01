@@ -12,7 +12,7 @@ export default function FollowedPage() {
   const navigate = useNavigate();
   const token = useSelector((state) => state.token)
   const getUser = async() => {
-    const response = await fetch(`https://4thyearproject-production.up.railway.app/users/${id}/`,
+    const response = await fetch(`https://serverside-production.up.railway.app/users/${id}/`,
     {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
